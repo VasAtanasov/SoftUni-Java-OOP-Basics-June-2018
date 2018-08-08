@@ -1,6 +1,6 @@
-package Ex06BirthdayCelebrations;
+package L12InterfacesExercise.Ex06BirthdayCelebrations;
 
-public class Robot implements Identifiable {
+public class Robot {
     private String model;
     private String id;
 
@@ -9,8 +9,4 @@ public class Robot implements Identifiable {
         this.id = id;
     }
 
-    @Override
-    public String getId() {
-        return this.id;
-    }
 }
