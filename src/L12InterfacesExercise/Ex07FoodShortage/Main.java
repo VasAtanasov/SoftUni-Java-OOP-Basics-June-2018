@@ -11,8 +11,8 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Map<String, Buyer> buyers = new HashMap<>();
 
-        int count = Integer.parseInt(reader.readLine());
-        for (int i = 0; i < count; i++) {
+        int lines = Integer.parseInt(reader.readLine());
+        for (int i = 0; i < lines; i++) {
             String[] tokens = reader.readLine().split("\\s+");
             Buyer buyer;
             String name = tokens[0];
