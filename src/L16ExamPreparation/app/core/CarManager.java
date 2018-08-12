@@ -5,18 +5,19 @@ import L16ExamPreparation.app.entities.cars.Car;
 import L16ExamPreparation.app.entities.races.Race;
 import L16ExamPreparation.app.factories.CarFactory;
 import L16ExamPreparation.app.factories.RaceFactory;
-import L16ExamPreparation.app.repositories.CarsRepository;
-import L16ExamPreparation.app.repositories.RacesRepository;
 import L16ExamPreparation.app.utilities.Constants;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class CarManager {
-    private CarsRepository carRepository;
-    private RacesRepository raceRepository;
+    private Map<Integer, Car> carRepository;
+    private Map<Integer,Race> raceRepository;
     private Garage garage;
 
-    public CarManager(CarsRepository carRepository, RacesRepository raceRepository) {
-        this.carRepository = carRepository;
-        this.raceRepository = raceRepository;
+    public CarManager() {
+        this.carRepository = new LinkedHashMap<>();
+        this.raceRepository = new LinkedHashMap<>();
         this.garage = new Garage();
     }
 
@@ -26,7 +27,7 @@ public class CarManager {
     }
 
     public String check(int id) {
-        return carRepository.getDetails(id);
+        return carRepository.get(id).toString();
     }
 
     public void open(int id, String type, int length, String route, int prizePool) {
@@ -42,7 +43,7 @@ public class CarManager {
 
     public String start(int id) {
         String result = Constants.NO_PARTICIPATNS;
-        if (this.raceRepository.contains(id)) {
+        if (this.raceRepository.containsKey(id)) {
             Race race = this.raceRepository.get(id);
             if (race.hasParticipants()) {
                 result = race.start();
@@ -53,7 +54,7 @@ public class CarManager {
     }
 
     public void park(int id) {
-        boolean isParticipant = this.raceRepository.getCollection()
+        boolean isParticipant = this.raceRepository
                 .values()
                 .stream()
                 .anyMatch(race -> race.hasParticipant(id));
