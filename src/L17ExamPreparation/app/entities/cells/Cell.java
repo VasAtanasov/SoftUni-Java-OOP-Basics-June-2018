@@ -1,0 +1,38 @@
+package L17ExamPreparation.app.entities.cells;
+
+public abstract class Cell {
+    private String id;
+    private int health;
+    private int positionRow;
+    private int positionCol;
+
+    public Cell(String id, int health, int positionRow, int positionCol) {
+        this.id = id;
+        this.health = health;
+        this.positionRow = positionRow;
+        this.positionCol = positionCol;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public int getPositionRow() {
+        return this.positionRow;
+    }
+
+    public int getPositionCol() {
+        return this.positionCol;
+    }
+
+    public abstract int getEnergy();
+}
