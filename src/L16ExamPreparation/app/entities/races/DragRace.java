@@ -1,12 +1,14 @@
 package L16ExamPreparation.app.entities.races;
 
-public class DragRace extends BaseRace {
+import L16ExamPreparation.app.entities.cars.Car;
+
+public class DragRace extends Race {
     public DragRace(int length, String route, int prizePool) {
         super(length, route, prizePool);
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public int getPerformancePoints(Car car) {
+        return car.getHorsepower() / car.getAcceleration();
     }
 }

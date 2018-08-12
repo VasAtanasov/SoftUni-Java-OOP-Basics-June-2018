@@ -1,8 +1,9 @@
 package L16ExamPreparation.app.entities.cars;
 
-import L16ExamPreparation.app.interfaces.Car;
 
-public abstract class BaseCar implements Car {
+import java.util.List;
+
+public abstract class Car {
     private String brand;
     private String model;
     private int yearOfProduction;
@@ -11,7 +12,7 @@ public abstract class BaseCar implements Car {
     private int suspension;
     private int durability;
 
-    protected BaseCar(String brand, String model, int yearOfProduction, int horsepower, int acceleration, int suspension, int durability) {
+    protected Car(String brand, String model, int yearOfProduction, int horsepower, int acceleration, int suspension, int durability) {
         this.brand = brand;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -21,13 +22,39 @@ public abstract class BaseCar implements Car {
         this.durability = durability;
     }
 
-    protected void setHorsepower(int horsepower) {
+    public String getBrand() {
+        return this.brand;
+    }
+
+    public String getModel() {
+        return this.model;
+    }
+
+    public int getHorsepower() {
+        return this.horsepower;
+    }
+
+    public int getAcceleration() {
+        return this.acceleration;
+    }
+
+    public int getSuspension() {
+        return this.suspension;
+    }
+
+    public int getDurability() {
+        return this.durability;
+    }
+
+    public void setHorsepower(int horsepower) {
         this.horsepower = horsepower;
     }
 
-    protected void setSuspension(int suspension) {
+    public void setSuspension(int suspension) {
         this.suspension = suspension;
     }
+
+    public abstract void setSpecialProperty(List<String> commandParams);
 
     @Override
     public String toString() {
