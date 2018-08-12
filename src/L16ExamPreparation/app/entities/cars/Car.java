@@ -54,6 +54,10 @@ public abstract class Car {
         this.suspension = suspension;
     }
 
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
+
     public abstract void setSpecialProperty(List<String> commandParams);
 
     @Override

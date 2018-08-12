@@ -2,6 +2,7 @@ package L16ExamPreparation.app.entities.races;
 
 import L16ExamPreparation.app.entities.cars.Car;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,6 +18,22 @@ public abstract class Race {
         this.route = route;
         this.prizePool = prizePool;
         this.participants = new LinkedHashMap<>();
+    }
+
+    public int getPrizePool() {
+        return this.prizePool;
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
+    public String getRoute() {
+        return this.route;
+    }
+
+    public Map<Integer, Car> getParticipants() {
+        return Collections.unmodifiableMap(this.participants);
     }
 
     public boolean hasParticipants() {

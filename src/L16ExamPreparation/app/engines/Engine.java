@@ -57,7 +57,12 @@ public class Engine {
                 int length = Integer.parseInt(commandParams.get(2));
                 String route = commandParams.get(3);
                 int prizePool = Integer.parseInt(commandParams.get(4));
-                this.manager.open(id, type, length, route, prizePool);
+                if (commandParams.size() == 5) {
+                    this.manager.open(id, type, length, route, prizePool);
+                } else {
+                    int extraParameter = Integer.parseInt(commandParams.get(5));
+                    this.manager.open(id, type, length, route, prizePool, extraParameter);
+                }
                 break;
             case "participate":
                 int carId = Integer.parseInt(commandParams.get(0));

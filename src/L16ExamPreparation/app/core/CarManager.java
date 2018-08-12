@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CarManager {
     private Map<Integer, Car> carRepository;
-    private Map<Integer,Race> raceRepository;
+    private Map<Integer, Race> raceRepository;
     private Garage garage;
 
     public CarManager() {
@@ -35,10 +35,20 @@ public class CarManager {
         this.raceRepository.put(id, race);
     }
 
+    public void open(int id, String type, int length, String route, int prizePool, int extraParameter) {
+        Race race = RaceFactory.openRace(type, length, route, prizePool, extraParameter);
+        this.raceRepository.put(id, race);
+    }
+
     public void participate(int carId, int raceId) {
-        if (! this.garage.contains(carId)) {
-            this.raceRepository.get(raceId).add(carId, carRepository.get(carId));
+        if (this.garage.contains(carId)) {
+            return;
         }
+        String raceType = this.raceRepository.get(raceId).getClass().getSimpleName();
+        if ("TimeLimitRace".equals(raceType) && this.raceRepository.get(raceId).hasParticipants()) {
+            return;
+        }
+        this.raceRepository.get(raceId).add(carId, carRepository.get(carId));
     }
 
     public String start(int id) {

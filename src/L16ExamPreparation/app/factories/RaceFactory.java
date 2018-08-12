@@ -1,9 +1,6 @@
 package L16ExamPreparation.app.factories;
 
-import L16ExamPreparation.app.entities.races.CasualRace;
-import L16ExamPreparation.app.entities.races.DragRace;
-import L16ExamPreparation.app.entities.races.DriftRace;
-import L16ExamPreparation.app.entities.races.Race;
+import L16ExamPreparation.app.entities.races.*;
 
 public class RaceFactory {
     private RaceFactory() {
@@ -21,4 +18,15 @@ public class RaceFactory {
         }
         return null;
     }
+
+    public static Race openRace(String raceType, int length, String route, int prizePool, int extraParameter) {
+        switch (raceType) {
+            case "Circuit":
+                return new CircuitRace(length, route, prizePool, extraParameter);
+            case "TimeLimit":
+                return new TimeLimitRace(length, route, prizePool, extraParameter);
+        }
+        return null;
+    }
 }
+
