@@ -9,7 +9,7 @@ public class Organism {
 
     public Organism(String name) {
         this.name = name;
-        this.clusters = new HashMap<>();
+        this.clusters = new LinkedHashMap<>();
     }
 
     public String getName() {

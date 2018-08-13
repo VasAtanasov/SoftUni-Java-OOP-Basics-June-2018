@@ -28,6 +28,14 @@ public class Cluster {
         return this.cells.size();
     }
 
+    public int getRows() {
+        return this.rows;
+    }
+
+    public int getCols() {
+        return this.cols;
+    }
+
     public void add(Cell cell) {
         this.cells.add(cell);
     }

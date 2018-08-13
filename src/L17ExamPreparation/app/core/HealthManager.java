@@ -40,6 +40,10 @@ public class HealthManager {
         if (organism.getClusters().containsKey(id)) {
             return CLUSTER_ALREADY_EXISTS;
         }
+        boolean isValidSize = rows >= 0 && cols >= 0;
+        if (!isValidSize) {
+            return INVALID_SIZE;
+        }
         Cluster cluster = ClusterFactory.create(id, rows, cols);
         organism.add(id, cluster);
         return String.format(CLUSTER_CREATED, organismName, id);
@@ -52,9 +56,14 @@ public class HealthManager {
         }
         Organism organism = this.organisms.get(organismName);
         if (! organism.getClusters().containsKey(clusterId)) {
-            return CLUSTER_ALREADY_EXISTS;
+            return CLUSTER_NOT_FOUND;
         }
         Cluster cluster = this.organisms.get(organismName).getClusters().get(clusterId);
+        boolean isValidPosition = positionRow >= 0 && positionRow < cluster.getRows() &&
+                positionCol >= 0 && positionCol < cluster.getCols();
+        if (! isValidPosition) {
+            return INVALID_POSITION;
+        }
         Cell cell = CellFactory.create(cellType, cellId, health, positionRow, positionCol, additionalProperty);
         cluster.add(cell);
         return String.format(CELL_CREATED, organismName, cellId, clusterId);
@@ -62,6 +71,11 @@ public class HealthManager {
     }
 
     public String activateCluster(String organismName) {
+        if (! this.organisms.containsKey(organismName)) {
+            return ORGANISM_NOT_FOUND;
+        }
+        Organism organism = this.organisms.get(organismName);
+
         return null;
 
     }

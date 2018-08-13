@@ -16,11 +16,20 @@ public class Engine {
     private HealthManager manager;
     private ConsoleInputReader reader;
     private ConsoleOutputWriter writer;
+    private List<String> errors;
 
     public Engine(HealthManager manager, ConsoleInputReader reader, ConsoleOutputWriter writer) {
         this.manager = manager;
         this.reader = reader;
         this.writer = writer;
+        this.errors = new ArrayList<>() {{
+            add(ORGANISM_ALREADY_CREATED);
+            add(CLUSTER_ALREADY_EXISTS);
+            add(ORGANISM_NOT_FOUND);
+            add(CLUSTER_NOT_FOUND);
+            add(INVALID_POSITION);
+            add(INVALID_SIZE);
+        }};
     }
 
     public void run() throws IOException {
@@ -53,7 +62,7 @@ public class Engine {
                 int rows = Integer.parseInt(commandTokens.get(2));
                 int cols = Integer.parseInt(commandTokens.get(3));
                 output = this.manager.addCluster(organismName, clusterId, rows, cols);
-                if (! CLUSTER_ALREADY_EXISTS.equals(output) && ! ORGANISM_NOT_FOUND.equals(output)) {
+                if (! this.errors.contains(output)) {
                     writer.writeLine(output);
                 }
                 break;
@@ -67,7 +76,14 @@ public class Engine {
                 int col = Integer.parseInt(commandTokens.get(6));
                 int additionalProperty = Integer.parseInt(commandTokens.get(7));
                 output = manager.addCell(organismName, clusterId, cellType, cellId, health, row, col, additionalProperty);
-                if (! ORGANISM_NOT_FOUND.equals(output) && ! CLUSTER_NOT_FOUND.equals(output)) {
+                if (! this.errors.contains(output)) {
+                    writer.writeLine(output);
+                }
+                break;
+            case ACTIVATE_CLUSTER:
+                organismName = commandTokens.get(0);
+                output = manager.activateCluster(organismName);
+                if (! this.errors.contains(output)) {
                     writer.writeLine(output);
                 }
                 break;
