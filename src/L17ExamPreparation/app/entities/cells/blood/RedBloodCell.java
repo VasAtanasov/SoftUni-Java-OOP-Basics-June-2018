@@ -10,6 +10,13 @@ public class RedBloodCell extends BloodCell {
 
     @Override
     public int getEnergy() {
-        return 0;
+        return super.getHealth() + this.velocity;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                System.lineSeparator() +
+                String.format("--------Health: %d | Velocity: %d | Energy: %d", super.getHealth(), this.velocity, this.getEnergy());
     }
 }

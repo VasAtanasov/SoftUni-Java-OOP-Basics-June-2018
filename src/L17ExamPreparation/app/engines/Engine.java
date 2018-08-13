@@ -10,9 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static L17ExamPreparation.app.utilities.Constants.END_COMMAND;
-import static L17ExamPreparation.app.utilities.Constants.CHECK_CONDITION;
-import static L17ExamPreparation.app.utilities.Constants.CREATE_ORGANISM;
+import static L17ExamPreparation.app.utilities.Constants.*;
 
 public class Engine {
     private HealthManager manager;
@@ -37,6 +35,8 @@ public class Engine {
         String command = commandTokens.remove(0);
 
         String organismName;
+        String clusterId;
+        String output;
 
         switch (command) {
             case CHECK_CONDITION:
@@ -46,6 +46,30 @@ public class Engine {
             case CREATE_ORGANISM:
                 organismName = commandTokens.get(0);
                 writer.writeLine(manager.createOrganism(organismName));
+                break;
+            case ADD_CLUSTER:
+                organismName = commandTokens.get(0);
+                clusterId = commandTokens.get(1);
+                int rows = Integer.parseInt(commandTokens.get(2));
+                int cols = Integer.parseInt(commandTokens.get(3));
+                output = this.manager.addCluster(organismName, clusterId, rows, cols);
+                if (! CLUSTER_ALREADY_EXISTS.equals(output) && ! ORGANISM_NOT_FOUND.equals(output)) {
+                    writer.writeLine(output);
+                }
+                break;
+            case ADD_CELL:
+                organismName = commandTokens.get(0);
+                clusterId = commandTokens.get(1);
+                String cellType = commandTokens.get(2);
+                String cellId = commandTokens.get(3);
+                int health = Integer.parseInt(commandTokens.get(4));
+                int row = Integer.parseInt(commandTokens.get(5));
+                int col = Integer.parseInt(commandTokens.get(6));
+                int additionalProperty = Integer.parseInt(commandTokens.get(7));
+                output = manager.addCell(organismName, clusterId, cellType, cellId, health, row, col, additionalProperty);
+                if (! ORGANISM_NOT_FOUND.equals(output) && ! CLUSTER_NOT_FOUND.equals(output)) {
+                    writer.writeLine(output);
+                }
                 break;
         }
     }

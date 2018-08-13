@@ -15,6 +15,8 @@ public class WhiteBloodCell extends BloodCell {
 
     @Override
     public String toString() {
-        return String.format("--------Health %d | Size %d | Energy %d", super.getHealth(), this.size, this.getEnergy());
+        return super.toString() +
+                System.lineSeparator() +
+                String.format("--------Health: %d | Size: %d | Energy: %d", super.getHealth(), this.size, this.getEnergy());
     }
 }

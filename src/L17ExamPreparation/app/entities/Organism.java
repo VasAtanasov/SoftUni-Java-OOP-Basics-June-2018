@@ -1,21 +1,51 @@
 package L17ExamPreparation.app.entities;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Organism {
     private String name;
-    private Collection<Cluster> clusters;
+    private Map<String, Cluster> clusters;
 
     public Organism(String name) {
         this.name = name;
-        this.clusters = new ArrayList<>();
+        this.clusters = new HashMap<>();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Map<String, Cluster> getClusters() {
+        return Collections.unmodifiableMap(this.clusters);
+    }
+
+    public void add(String id, Cluster cluster) {
+        this.clusters.put(id, cluster);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        int clusterCount = this.clusters.size();
+        int cellCount = this.clusters
+                .values()
+                .stream()
+                .map(Cluster::getCellCount)
+                .reduce(0, (a, b) -> a + b);
+
+        String clustersBuilder = clusterCount == 0 ? "" : System.lineSeparator() +
+                this.clusters
+                        .values()
+                        .stream()
+                        .map(Cluster::toString)
+                        .collect(Collectors.joining(System.lineSeparator()));
+
+        return String.format("Organism - %s", this.getName()) +
+                System.lineSeparator() +
+                String.format("--Clusters: %d", clusterCount) +
+                System.lineSeparator() +
+                String.format("--Cells: %d", cellCount) +
+                clustersBuilder;
+
     }
 }
-
-

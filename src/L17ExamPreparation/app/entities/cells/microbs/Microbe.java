@@ -9,4 +9,15 @@ public abstract class Microbe extends Cell {
         super(id, health, positionRow, positionCol);
         this.virulence = virulence;
     }
+
+    public int getVirulence() {
+        return this.virulence;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                System.lineSeparator() +
+                String.format("--------Health: %d | Virulence: %d | Energy: %d", super.getHealth(), this.getVirulence(), this.getEnergy());
+    }
 }

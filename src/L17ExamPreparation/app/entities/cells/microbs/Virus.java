@@ -7,6 +7,6 @@ public class Virus extends Microbe {
 
     @Override
     public int getEnergy() {
-        return 0;
+        return super.getHealth() + getVirulence();
     }
 }

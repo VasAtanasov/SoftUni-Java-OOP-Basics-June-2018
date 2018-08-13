@@ -13,11 +13,6 @@ public abstract class Cell {
         this.positionCol = positionCol;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     public String getId() {
         return this.id;
     }
@@ -35,4 +30,9 @@ public abstract class Cell {
     }
 
     public abstract int getEnergy();
+
+    @Override
+    public String toString() {
+        return String.format("------Cell %s [%d,%d]", this.getId(), this.getPositionRow(), this.getPositionCol());
+    }
 }
