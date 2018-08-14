@@ -13,6 +13,18 @@ public abstract class Cell {
         this.positionCol = positionCol;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setPositionRow(int positionRow) {
+        this.positionRow = positionRow;
+    }
+
+    public void setPositionCol(int positionCol) {
+        this.positionCol = positionCol;
+    }
+
     public String getId() {
         return this.id;
     }

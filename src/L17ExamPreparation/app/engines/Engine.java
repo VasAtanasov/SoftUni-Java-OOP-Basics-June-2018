@@ -1,24 +1,22 @@
 package L17ExamPreparation.app.engines;
 
 import L17ExamPreparation.app.core.HealthManager;
-import L17ExamPreparation.app.io.ConsoleInputReader;
-import L17ExamPreparation.app.io.ConsoleOutputWriter;
+import L17ExamPreparation.app.io.ConsoleReader;
+import L17ExamPreparation.app.io.ConsoleWriter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static L17ExamPreparation.app.utilities.Constants.*;
 
 public class Engine {
     private HealthManager manager;
-    private ConsoleInputReader reader;
-    private ConsoleOutputWriter writer;
+    private ConsoleReader reader;
+    private ConsoleWriter writer;
     private List<String> errors;
 
-    public Engine(HealthManager manager, ConsoleInputReader reader, ConsoleOutputWriter writer) {
+    public Engine(HealthManager manager, ConsoleReader reader, ConsoleWriter writer) {
         this.manager = manager;
         this.reader = reader;
         this.writer = writer;
@@ -35,13 +33,13 @@ public class Engine {
     public void run() throws IOException {
         String input;
         while (! END_COMMAND.equals(input = reader.readLine())) {
-            List<String> commandTokens = Arrays.stream(input.split("\\s+")).collect(Collectors.toCollection(ArrayList::new));
+            String[] commandTokens = input.split("\\s+");
             this.dispatchCommand(commandTokens);
         }
     }
 
-    private void dispatchCommand(List<String> commandTokens) {
-        String command = commandTokens.remove(0);
+    private void dispatchCommand(String[] commandTokens) {
+        String command = commandTokens[0];
 
         String organismName;
         String clusterId;
@@ -49,44 +47,45 @@ public class Engine {
 
         switch (command) {
             case CHECK_CONDITION:
-                organismName = commandTokens.get(0);
-                writer.writeLine(manager.checkCondition(organismName));
+                organismName = commandTokens[1];
+                output = manager.checkCondition(organismName);
+                printMessage(output);
                 break;
             case CREATE_ORGANISM:
-                organismName = commandTokens.get(0);
+                organismName = commandTokens[1];
                 writer.writeLine(manager.createOrganism(organismName));
                 break;
             case ADD_CLUSTER:
-                organismName = commandTokens.get(0);
-                clusterId = commandTokens.get(1);
-                int rows = Integer.parseInt(commandTokens.get(2));
-                int cols = Integer.parseInt(commandTokens.get(3));
+                organismName = commandTokens[1];
+                clusterId = commandTokens[2];
+                int rows = Integer.parseInt(commandTokens[3]);
+                int cols = Integer.parseInt(commandTokens[4]);
                 output = this.manager.addCluster(organismName, clusterId, rows, cols);
-                if (! this.errors.contains(output)) {
-                    writer.writeLine(output);
-                }
+                printMessage(output);
                 break;
             case ADD_CELL:
-                organismName = commandTokens.get(0);
-                clusterId = commandTokens.get(1);
-                String cellType = commandTokens.get(2);
-                String cellId = commandTokens.get(3);
-                int health = Integer.parseInt(commandTokens.get(4));
-                int row = Integer.parseInt(commandTokens.get(5));
-                int col = Integer.parseInt(commandTokens.get(6));
-                int additionalProperty = Integer.parseInt(commandTokens.get(7));
+                organismName = commandTokens[1];
+                clusterId = commandTokens[2];
+                String cellType = commandTokens[3];
+                String cellId = commandTokens[4];
+                int health = Integer.parseInt(commandTokens[5]);
+                int row = Integer.parseInt(commandTokens[6]);
+                int col = Integer.parseInt(commandTokens[7]);
+                int additionalProperty = Integer.parseInt(commandTokens[8]);
                 output = manager.addCell(organismName, clusterId, cellType, cellId, health, row, col, additionalProperty);
-                if (! this.errors.contains(output)) {
-                    writer.writeLine(output);
-                }
+                printMessage(output);
                 break;
             case ACTIVATE_CLUSTER:
-                organismName = commandTokens.get(0);
+                organismName = commandTokens[1];
                 output = manager.activateCluster(organismName);
-                if (! this.errors.contains(output)) {
-                    writer.writeLine(output);
-                }
+                printMessage(output);
                 break;
+        }
+    }
+
+    private void printMessage(String output) {
+        if (! this.errors.contains(output)) {
+            writer.writeLine(output);
         }
     }
 

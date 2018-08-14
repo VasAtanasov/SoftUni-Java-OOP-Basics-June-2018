@@ -7,6 +7,6 @@ public class Fungi extends Microbe {
 
     @Override
     public int getEnergy() {
-        return (super.getHealth() + getVirulence()) / 3;
+        return (super.getHealth() + getVirulence()) / 4;
     }
 }

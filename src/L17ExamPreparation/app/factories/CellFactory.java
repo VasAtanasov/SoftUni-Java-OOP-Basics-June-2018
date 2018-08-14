@@ -7,28 +7,28 @@ import L17ExamPreparation.app.entities.cells.microbs.Bacteria;
 import L17ExamPreparation.app.entities.cells.microbs.Fungi;
 import L17ExamPreparation.app.entities.cells.microbs.Virus;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
 
-public class CellFactory {
-    private static Map<String, BiFunction<String, int[], Cell>> cellModels;
+import static L17ExamPreparation.app.utilities.Constants.*;
 
-    static {
-        cellModels = new HashMap<>() {{
-            put("WhiteBloodCell", (id, params) -> new WhiteBloodCell(id, params[0], params[1], params[2], params[3]));
-            put("RedBloodCell", (id, params) -> new RedBloodCell(id, params[0], params[1], params[2], params[3]));
-            put("Bacteria", (id, params) -> new Bacteria(id, params[0], params[1], params[2], params[3]));
-            put("Fungi", (id, params) -> new Fungi(id, params[0], params[1], params[2], params[3]));
-            put("Virus", (id, params) -> new Virus(id, params[0], params[1], params[2], params[3]));
-        }};
-    }
+public final class CellFactory {
 
     private CellFactory() {
 
     }
 
     public static Cell create(String cellType, String cellId, int health, int positionRow, int positionCol, int additionalProperty) {
-        return cellModels.get(cellType).apply(cellId, new int[] {health, positionRow, positionCol, additionalProperty});
+        switch (cellType) {
+            case WHITE_BLOOD_CELL:
+                return new WhiteBloodCell(cellId, health, positionRow, positionCol, additionalProperty);
+            case RED_BLOOD_CELL:
+                return new RedBloodCell(cellId, health, positionRow, positionCol, additionalProperty);
+            case BACTERIA:
+                return new Bacteria(cellId, health, positionRow, positionCol, additionalProperty);
+            case VIRUS:
+                return new Virus(cellId, health, positionRow, positionCol, additionalProperty);
+            case FUNGI:
+                return new Fungi(cellId, health, positionRow, positionCol, additionalProperty);
+        }
+        return null;
     }
 }

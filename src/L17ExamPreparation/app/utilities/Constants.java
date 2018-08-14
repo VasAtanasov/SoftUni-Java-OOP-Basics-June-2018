@@ -11,6 +11,7 @@ public final class Constants {
     public static final String ORGANISM_CREATED = "Created organism %s";
     public static final String CLUSTER_CREATED = "Organism %s: Created cluster %s";
     public static final String CELL_CREATED = "Organism %s: Created cell %s in cluster %s";
+    public static final String CLUSTER_ACTIVATED = "Organism %s: Activated cluster %s. Cells left: %s";
 
     // Errors
     public static final String ORGANISM_ALREADY_CREATED = "Organism %s already exists";
@@ -19,4 +20,12 @@ public final class Constants {
     public static final String CLUSTER_NOT_FOUND = "Cluster not found";
     public static final String INVALID_POSITION = "Invalid position";
     public static final String INVALID_SIZE = "Invalid size";
+
+    // Cell types
+    public static final String RED_BLOOD_CELL = "RedBloodCell";
+    public static final String WHITE_BLOOD_CELL = "WhiteBloodCell";
+    public static final String BACTERIA = "Bacteria";
+    public static final String FUNGI = "Fungi";
+    public static final String VIRUS = "Virus";
+
 }

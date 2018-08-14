@@ -1,7 +1,7 @@
 package L17ExamPreparation.app.io;
 
 
-public class ConsoleOutputWriter  {
+public class ConsoleWriter {
 
     public void writeLine(String line) {
         System.out.println(line);

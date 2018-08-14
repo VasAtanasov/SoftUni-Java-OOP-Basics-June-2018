@@ -20,6 +20,9 @@ public class HealthManager {
     }
 
     public String checkCondition(String organismName) {
+        if (! this.organisms.containsKey(organismName)) {
+            return ORGANISM_NOT_FOUND;
+        }
         return this.organisms.get(organismName).toString();
     }
 
@@ -41,7 +44,7 @@ public class HealthManager {
             return CLUSTER_ALREADY_EXISTS;
         }
         boolean isValidSize = rows >= 0 && cols >= 0;
-        if (!isValidSize) {
+        if (! isValidSize) {
             return INVALID_SIZE;
         }
         Cluster cluster = ClusterFactory.create(id, rows, cols);
@@ -75,8 +78,9 @@ public class HealthManager {
             return ORGANISM_NOT_FOUND;
         }
         Organism organism = this.organisms.get(organismName);
-
-        return null;
-
+        if (organism.getClusters().size() == 0) {
+            return CLUSTER_NOT_FOUND;
+        }
+        return organism.activateCluster();
     }
 }
